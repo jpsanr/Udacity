@@ -39,12 +39,15 @@ var Engine = (function(global) {
     aux = false;
     statusMenu = -1;
     function main() {
+        
+        //condição incial do jogo, criando o menu iniciar 
         if(aux===false) 
         { 
             aux = true;
             menuIniciar = new MenuInciar() ;
             statusJogo =  menuIniciar.situacao;
         }
+        //Verifica se esta na tela inicial ou no jogo
         if (statusJogo === "inicio") { 
             statusMenu = menuIniciar.atualizarMenu();
 

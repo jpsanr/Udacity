@@ -8,6 +8,7 @@ class MenuInciar
         this.situacao = "inicio"; 
     }
     
+    //Texto de boas Vindas
     textoInicial()
     {
         ctx.fillStyle = "#333333";
@@ -20,6 +21,9 @@ class MenuInciar
         ctx.fillText("*Use fone de ouvidos", 175, 105);
     }
     
+
+    //Metodo que desenha os botoes do menu iniciar
+        //Recebe a possição do botão, texto e se esta selecionado para mudar a cor
     retanguloOpcao(x, y, texto, selecionado=false)
     {
         let cor = (selecionado === false) ? "#FFFFFF" : "#0D59FF";  
@@ -27,17 +31,15 @@ class MenuInciar
         ctx.fillStyle = cor;
         ctx.strokeStyle = cor;
         ctx.strokeRect(x, y, 150, 55);
-        
-        
-        
+
         ctx.font = "30px Arial";
         ctx.fillText(texto, x+40, y+38);
     }
     
     
+    //Metodo que redesenha o menu --> Equivalente ao render()
     atualizarMenu(botao)
     {
-        //ctx.clearRect(0,0,this.canvas.width,canvas.height);
         switch (botao)
         {
             case 1:
@@ -67,6 +69,7 @@ class MenuInciar
         
     }
     
+    //Trata os inputs
     handleInput(allowedKeys)
     {
         if(allowedKeys === "up")
@@ -101,13 +104,11 @@ class MenuInciar
         console.log(`contador = ${this.contador}`);
         
     }
-    
-    
-    
 }
 
 class NumeroAleatorio
 {
+    //Gera um num aleatório dado um range max - min
     gerarNumero(max, min=1)
     {
         return Math.floor(Math.random() * (max - min) ) + min;
@@ -156,24 +157,20 @@ class Beep
     
 }
 
-
+//Classe para ser herdada pelo player e enemy
 class Component {
     constructor(x, y,sprite,  speed=5) {
-        this.x = x;
+        this.x = x;  
         this.y = y;
-        this.sprite = sprite;
+        this.sprite = sprite; //figura
         this.speed = speed;
     }
     
-    
     render() 
     {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-        
-        
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);  
     }  
-    
-    
+       
 }
 
 
@@ -192,8 +189,7 @@ class Enemy extends Component {
         (this.x > 500) ? this.x = -50  : this.x += this.speed * dt;  /*verifica se o inimigo está no final do mapa
         se sim retorna ao inicio */
         
-        
-        
+        //Verifica se houve colissão
         if( player.x - 70 < this.x && 
             player.x + 70 > this.x &&
             player.y - 42 < this.y &&
@@ -201,9 +197,6 @@ class Enemy extends Component {
             {
                 player.fracasso();
             }
-            
-            
-            
         }
         
     }
@@ -211,14 +204,14 @@ class Enemy extends Component {
     class Player extends Component
     {
         constructor(x, y, sprite, speed=100) {
-            super(x, y, sprite);
+            super(x, y, sprite); //herda valores do Componente
             this.speed = speed;
-            this.flag = "vivo";
+            this.flag = "vivo";  //verifica os status do jogador - vivo , morto, venceu
         }
         
         handleInput(allowedKeys)
         {
-            var situacao ;
+            var situacao ; //normal ou parede
             
             if(allowedKeys === "up")
             {
@@ -324,6 +317,9 @@ class Enemy extends Component {
         player = new Player(200,450, "images/char-boy.png", 100);
         
         
+
+        //Gerando os inimigos randomicamente 
+            //tanto a posição como a velocidade
         let allEnemies = [];
         for ( i=0 ; i<numInimigos; i++)
         {
@@ -336,17 +332,7 @@ class Enemy extends Component {
         
         return allEnemies;
     }
-    
-    
-    
-    
-    
-    
-    //allEnemies =  iniciarJogo(6);
-    
-    
-    
-    
+        
     // This listens for key presses and sends the keys to your
     // Player.handleInput() method. You don't need to modify this.
     document.addEventListener('keyup', function(e) {
